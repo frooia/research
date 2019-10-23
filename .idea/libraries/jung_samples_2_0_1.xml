@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jung-samples-2.0.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../jung2-2_0_1/jung-samples-2.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

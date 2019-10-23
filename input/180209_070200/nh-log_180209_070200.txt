@@ -1,0 +1,223 @@
+Network computation started: 180209_070200
+*** Network Details: From 2018-01-04 07:02:00.0 to 2018-02-09 07:02:00 ***
+Link Count = 185791
+Vertex Count = 78701
+Density = 5.999287638881316E-5
+Network 180209_070200 inserted into database.
+Computing BetweennessCentrality ... 
+m = 3096805650
+Rank	UserID	BCScore
+0	21313	0.0017840563209943503
+1	69949	0.0017337530951293029
+1. Err-updateUser: 31179862 0.0017337530951293029
+2	43725	0.0015435622477778304
+2. Err-updateUser: 55646295 0.0015435622477778304
+3	36879	0.0014988315673429725
+3. Err-updateUser: 17755145 0.0014988315673429725
+4	64324	0.0014799409783771411
+5	26650	0.0013110079602197434
+4. Err-updateUser: 105164603 0.0013110079602197434
+6	36495	0.001287028069908174
+5. Err-updateUser: 18279320 0.001287028069908174
+7	28662	0.0012386863895225764
+6. Err-updateUser: 381591643 0.0012386863895225764
+8	38438	0.0011458229322430645
+7. Err-updateUser: 39384517 0.0011458229322430645
+9	186446	0.0010989289874244303
+10	160498	0.0010865059082239411
+11	164000	9.889132609385612E-4
+12	29026	8.819706131825932E-4
+8. Err-updateUser: 292988997 8.819706131825932E-4
+13	255050	8.652701676720134E-4
+14	29731	8.434871859220209E-4
+9. Err-updateUser: 57065141 8.434871859220209E-4
+15	189483	8.325193726824529E-4
+16	260617	7.972471079854058E-4
+17	98496	7.935792279423948E-4
+18	70449	7.735987572672398E-4
+10. Err-updateUser: 826406978 7.735987572672398E-4
+19	6721	7.61950045226471E-4
+11. Err-updateUser: 295713773 7.61950045226471E-4
+20	34713	7.597619539923101E-4
+21	30358	7.554012349609051E-4
+22	141538	7.551833995986383E-4
+23	245946	7.361777855030369E-4
+24	54486	7.337188323556213E-4
+25	60146	6.751017890627739E-4
+26	19289	6.579506765076287E-4
+27	124336	6.488503922089986E-4
+28	3579	6.469201504509847E-4
+29	50005	6.447147426985532E-4
+12. Err-updateUser: 1429761 5.489527571741546E-9
+13. Err-updateUser: 4488931 4.843700798595482E-9
+14. Err-updateUser: 16285818 4.5207874120224495E-9
+15. Err-updateUser: 19346335 4.5207874120224495E-9
+16. Err-updateUser: 23974861 4.5207874120224495E-9
+17. Err-updateUser: 25081272 4.359330718735934E-9
+18. Err-updateUser: 88273330 4.278602372092675E-9
+19. Err-updateUser: 24001196 4.197874025449418E-9
+20. Err-updateUser: 53501748 4.197874025449418E-9
+21. Err-updateUser: 1884745728 4.197874025449418E-9
+22. Err-updateUser: 24150634 4.197874025449418E-9
+23. Err-updateUser: 16513416 9.687401597190963E-10
+24. Err-updateUser: 4518281 9.687401597190963E-10
+25. Err-updateUser: 45879114 8.072834664325803E-10
+26. Err-updateUser: 188880102 8.072834664325803E-10
+27. Err-updateUser: 881490062 8.072834664325803E-10
+28. Err-updateUser: 1087818049 8.072834664325803E-10
+29. Err-updateUser: 1821 0.0
+30. Err-updateUser: 57279562 0.0
+31. Err-updateUser: 91095629 0.0
+32. Err-updateUser: 64750841 0.0
+33. Err-updateUser: 891040309 0.0
+34. Err-updateUser: 10157 0.0
+35. Err-updateUser: 14165865 0.0
+36. Err-updateUser: 16000837 0.0
+37. Err-updateUser: 458636516 0.0
+38. Err-updateUser: 30025336 0.0
+39. Err-updateUser: 18228898 0.0
+40. Err-updateUser: 806585 0.0
+41. Err-updateUser: 26758945 0.0
+42. Err-updateUser: 237125787 0.0
+43. Err-updateUser: 567308138 0.0
+44. Err-updateUser: 27676444 0.0
+45. Err-updateUser: 30973 0.0
+46. Err-updateUser: 46562247 0.0
+47. Err-updateUser: 123764326 0.0
+48. Err-updateUser: 748967342 0.0
+49. Err-updateUser: 156528728 0.0
+50. Err-updateUser: 1088411 0.0
+51. Err-updateUser: 16423797 0.0
+52. Err-updateUser: 15637375 0.0
+53. Err-updateUser: 310020587 0.0
+54. Err-updateUser: 1355776 0.0
+55. Err-updateUser: 64402420 0.0
+56. Err-updateUser: 19968281 0.0
+57. Err-updateUser: 117094096 0.0
+58. Err-updateUser: 185776957 0.0
+59. Err-updateUser: 78558366 0.0
+60. Err-updateUser: 4899651 0.0
+61. Err-updateUser: 16171919 0.0
+62. Err-updateUser: 17482371 0.0
+63. Err-updateUser: 14467915 0.0
+64. Err-updateUser: 18924223 0.0
+65. Err-updateUser: 18268854 0.0
+66. Err-updateUser: 21021326 0.0
+67. Err-updateUser: 18006752 0.0
+68. Err-updateUser: 22201002 0.0
+69. Err-updateUser: 16827693 0.0
+70. Err-updateUser: 18269496 0.0
+71. Err-updateUser: 17220917 0.0
+72. Err-updateUser: 37537286 0.0
+73. Err-updateUser: 14861495 0.0
+74. Err-updateUser: 18793851 0.0
+75. Err-updateUser: 38717140 0.0
+76. Err-updateUser: 53659564 0.0
+77. Err-updateUser: 15778898 0.0
+78. Err-updateUser: 14468212 0.0
+79. Err-updateUser: 46974565 0.0
+80. Err-updateUser: 19318159 0.0
+81. Err-updateUser: 24692175 0.0
+82. Err-updateUser: 13812842 0.0
+83. Err-updateUser: 99402071 0.0
+84. Err-updateUser: 18662816 0.0
+85. Err-updateUser: 40421078 0.0
+86. Err-updateUser: 35309264 0.0
+87. Err-updateUser: 46450186 0.0
+88. Err-updateUser: 15647776 0.0
+89. Err-updateUser: 135187648 0.0
+90. Err-updateUser: 5555342 0.0
+91. Err-updateUser: 90620291 0.0
+92. Err-updateUser: 60999493 0.0
+93. Err-updateUser: 24823181 0.0
+94. Err-updateUser: 53397465 0.0
+95. Err-updateUser: 16303106 0.0
+96. Err-updateUser: 58902399 0.0
+97. Err-updateUser: 101106432 0.0
+98. Err-updateUser: 27968677 0.0
+99. Err-updateUser: 130859741 0.0
+100. Err-updateUser: 46712793 0.0
+101. Err-updateUser: 80265689 0.0
+102. Err-updateUser: 20104230 0.0
+103. Err-updateUser: 16958487 0.0
+104. Err-updateUser: 20759594 0.0
+105. Err-updateUser: 236505870 0.0
+106. Err-updateUser: 260491932 0.0
+107. Err-updateUser: 43435917 0.0
+108. Err-updateUser: 106480454 0.0
+109. Err-updateUser: 37537571 0.0
+110. Err-updateUser: 181587954 0.0
+111. Err-updateUser: 65062597 0.0
+112. Err-updateUser: 26264758 0.0
+113. Err-updateUser: 89309301 0.0
+114. Err-updateUser: 246860689 0.0
+115. Err-updateUser: 102810379 0.0
+116. Err-updateUser: 18138170 0.0
+117. Err-updateUser: 15386053 0.0
+118. Err-updateUser: 22201444 0.0
+119. Err-updateUser: 297981172 0.0
+120. Err-updateUser: 313448338 0.0
+121. Err-updateUser: 354734182 0.0
+122. Err-updateUser: 219072584 0.0
+123. Err-updateUser: 21545986 0.0
+124. Err-updateUser: 231131287 0.0
+125. Err-updateUser: 95994080 0.0
+126. Err-updateUser: 29017315 0.0
+127. Err-updateUser: 397988580 0.0
+128. Err-updateUser: 63227546 0.0
+129. Err-updateUser: 60606206 0.0
+130. Err-updateUser: 37275487 0.0
+131. Err-updateUser: 377410320 0.0
+132. Err-updateUser: 391172671 0.0
+133. Err-updateUser: 87474247 0.0
+134. Err-updateUser: 501930139 0.0
+135. Err-updateUser: 32162969 0.0
+136. Err-updateUser: 45664205 0.0
+137. Err-updateUser: 394842878 0.0
+138. Err-updateUser: 2278746 0.0
+139. Err-updateUser: 140823837 0.0
+140. Err-updateUser: 8308222 0.0
+141. Err-updateUser: 93241358 0.0
+142. Err-updateUser: 487118986 0.0
+143. Err-updateUser: 553051509 0.0
+144. Err-updateUser: 20628670 0.0
+145. Err-updateUser: 19973305 0.0
+146. Err-updateUser: 316200788 0.0
+147. Err-updateUser: 529586717 0.0
+148. Err-updateUser: 406904271 0.0
+149. Err-updateUser: 834466861 0.0
+150. Err-updateUser: 119980727 0.0
+151. Err-updateUser: 599844433 0.0
+152. Err-updateUser: 244894476 0.0
+153. Err-updateUser: 35964850 0.0
+154. Err-updateUser: 198626880 0.0
+155. Err-updateUser: 1167491072 0.0
+156. Err-updateUser: 14861684 0.0
+157. Err-updateUser: 277402910 0.0
+158. Err-updateUser: 27837503 0.0
+159. Err-updateUser: 81707337 0.0
+160. Err-updateUser: 39765961 0.0
+161. Err-updateUser: 20104360 0.0
+162. Err-updateUser: 190107382 0.0
+163. Err-updateUser: 523950744 0.0
+164. Err-updateUser: 45795103 0.0
+165. Err-updateUser: 340316653 0.0
+166. Err-updateUser: 24822993 0.0
+167. Err-updateUser: 816641287 0.0
+168. Err-updateUser: 1228180633 0.0
+169. Err-updateUser: 23119053 0.0
+170. Err-updateUser: 76595488 0.0
+171. Err-updateUser: 260360756 0.0
+172. Err-updateUser: 346345751 0.0
+173. Err-updateUser: 1387697922 0.0
+TotalBC of Network 180209_070200 updated to 0.12041618821010305.
+BC: Total=0.12041618821010305	MaxBC=0.0017840563209943503	UserID=728673283
+BC computation done.
+File written: /Users/cyber1/workspace/CyberTF/output/180209_070200/BCentrality_180209_070200.dat (91.6126 MB).
+File written: /Users/cyber1/workspace/CyberTF/output/180209_070200/network_180209_070200.dat (13.0148 MB).
+File written: /Users/cyber1/workspace/CyberTF/output/180209_070200/netLinkAsso_180209_070200.json (20.4766 MB).
+BetweennessCentrality computaion time = 220.0113 minutes
+DB and File update time = 12.9392 minutes
+Total time = 232.9505 minutes
+All tasks completed at Fri Feb 09 10:54:58 EST 2018.
+
