@@ -26,6 +26,7 @@
   </component>
   <component name="ProjectId" id="1R4kNTIjeM1bdmQlgg3WDW9tcyR" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
