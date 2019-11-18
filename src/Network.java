@@ -10,6 +10,7 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
     protected double density;
     protected double totalBC; // total BetweennessCentrality
     protected V largestDegree;
+    protected ArrayList<V> nodes;
 
     public Network(String n) {
         super();
@@ -22,6 +23,16 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
         long n = this.getVertexCount();
         long m = this.getEdgeCount();
         density = (double) m / ((double)(n*(n-1)) / 2);
+    }
+
+    public void setNodes() {
+        ArrayList<V> n = new ArrayList<V>();
+        boolean b = n.addAll(this.getVertices());
+        nodes = n;
+    }
+
+    public ArrayList<V> getNodes() {
+        return nodes;
     }
 
     public double getDensity() {

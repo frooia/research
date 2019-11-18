@@ -49,6 +49,7 @@ public class NetworkHandler {
                     net = this.readNet(p + f);
                     System.out.println("Density = "+net.getDensity());
                     System.out.println("EdgeCount = "+net.getEdgeCount());
+                    net.setNodes();
                     System.out.println("NodeCount = "+net.getVertexCount());
                     System.out.println();
                     netList.add(net);
@@ -63,30 +64,8 @@ public class NetworkHandler {
     }
 
     //read BC from a file
-    private void readBC(String p, String name) {
+    private void readBC(String p, String name, Network net) {
         HashMap<Integer, Double> map = new HashMap<Integer, Double>();
-        /*
-        try {
-            Scanner in = new Scanner(f);
-            String remaining = in.next();
-            int count = 0;
-            System.out.println(in.hasNext());
-            while (in.hasNext()) {
-                int firstIndex = remaining.indexOf("\"originalPos\"");
-                remaining = remaining.substring(firstIndex + 14);
-                in = new Scanner(remaining);
-                map.put(in.nextInt(), 1.0);
-                count++;
-                //map.put(all.substring(all.indexOf("\"originalPos\"", start)+14),);
-
-            }
-            System.out.println("BCentrality calculated. n = "+n+" and count = "+count);
-            //form = new DecimalFormat("#0.####");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return map;
-*/
         // Define charset and file path
         Charset c = Charset.forName("US-ASCII");
         // assumes the file is located in the same folder as the java class
@@ -97,6 +76,8 @@ public class NetworkHandler {
             String ln = null; // a line in the file
             boolean start = false; // a flag to indicate start of reading data
 
+            int numOriginalPos = 0;
+            int numNodes = 0;
             // for each line, process the string to extract needed data
             while ((ln = r.readLine()) != null) {
                 // split the line by comma and form an array of the component strings
@@ -106,33 +87,28 @@ public class NetworkHandler {
                 for (int i = 0; i < str.length; i++) {
                     if (!start && str[i].contains("edu.uci.ics.jung.algorithms.importance.Ranking")) start = true;
                     if (start) {
-                        System.out.println((++j)+". "+str[i]);
+                        //System.out.println((++j)+". "+str[i]);
 
                         // Your code starts here: capture needed data and store them in a hashmap
+                        //extra condition for if statement: && net.getNodes().contains(Integer.parseInt(str[i].substring(14)))
                         if (str[i].contains("originalPos")) {
+                            int node = Integer.parseInt(str[i].substring(14));
+                            System.out.println(node+"   "+net.getNodes().get(++j));
+                            numOriginalPos++;
                             map.put(Integer.parseInt(str[i].substring(14)), Double.parseDouble(str[i+1].substring(12)));
                         }
-
-
-
 
                         // Your code ends here
                     }
                 }
             }
-            int numNull = 0;
-            for (Integer k : map.keySet()) {
-                if (map.get(k) <= 3.0) {
-                    numNull++;
-                }
-            }
-            System.out.println("numNull: "+numNull);
+            System.out.println("numOriginalPos: " + numOriginalPos);
+            System.out.println("numNodes: " + numNodes+" should be "+net.getNodes().size());
         } catch (IOException e) {
             System.err.format("IOException: %s%n", e);
         }
         System.out.println("File: "+f);
         System.out.println("Map size: "+map.size());
-        //System.out.println("BC of 143345: "+map.get(143345));
     }
 
     private Network<Integer, Integer> readNet(String f) {
@@ -183,10 +159,8 @@ public class NetworkHandler {
         NetworkHandler nh = new NetworkHandler("./conf/conf_db.txt", args[0]);
         String [ ] dirs = (new File("input")).list();
         ArrayList<Network<Integer, Integer>> netList = nh.init(dirs);
-        for (int i = 0; i < dirs.length; i++) {
-            if (dirs[i].contains("180207_190200")){
-                nh.readBC("input/"+dirs[i],"BCentrality_"+dirs[i]+".dat");
-            }
+        for (int i = 0; i < netList.size()-3; i++) {
+            nh.readBC("input/"+netList.get(i).getName(), "BCentrality_"+netList.get(i).getName()+".dat", netList.get(i));
         }
 
         //System.out.println("Average degree: "+network.getAverageDegree());

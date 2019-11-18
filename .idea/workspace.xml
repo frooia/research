@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3d5e9ad-d79b-411e-837a-cd8900621daa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/json_io_4_0_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/hamcrest-core-1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/json-io-4.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/json-simple-1.1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/junit-4.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/research/BCReader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/BCReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/research/Network.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/research/Network.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/research/NetworkHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/research/NetworkHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research.iml" beforeDir="false" afterPath="$PROJECT_DIR$/research.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Network.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NetworkHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NetworkHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -119,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571873253823</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Able to read from BCentrality files, unable to separate edge centralities from node centralities">
+      <created>1573432609688</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1573432609688</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -152,7 +153,9 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -166,6 +169,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit" />
     <MESSAGE value="Second commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Second commit" />
+    <MESSAGE value="Able to read from BCentrality files, unable to separate edge centralities from node centralities" />
+    <option name="LAST_COMMIT_MESSAGE" value="Able to read from BCentrality files, unable to separate edge centralities from node centralities" />
   </component>
 </project>
