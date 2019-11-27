@@ -64,12 +64,13 @@ public class NetworkHandler {
     }
 
     //read BC from a file
-    private void readBC(String p, String name, Network net) {
+    private HashMap<Integer, Double> readBC(String p, String name, Network net) {
         HashMap<Integer, Double> map = new HashMap<Integer, Double>();
         // Define charset and file path
         Charset c = Charset.forName("US-ASCII");
         // assumes the file is located in the same folder as the java class
         Path f = FileSystems.getDefault().getPath(p, name);
+        System.out.println("File: "+f);
 
         // open a file using the specified charset
         try (BufferedReader r = Files.newBufferedReader(f, c)) {
@@ -86,18 +87,18 @@ public class NetworkHandler {
                 // print out each component in one line
                 for (int i = 0; i < str.length; i++) {
                     if (!start && str[i].contains("edu.uci.ics.jung.algorithms.importance.Ranking")) start = true;
-                    if (start) {
+                    if (start && numNodes < net.getNodes().size()) {
                         //System.out.println((++j)+". "+str[i]);
-
                         // Your code starts here: capture needed data and store them in a hashmap
                         //extra condition for if statement: && net.getNodes().contains(Integer.parseInt(str[i].substring(14)))
                         if (str[i].contains("originalPos")) {
-                            int node = Integer.parseInt(str[i].substring(14));
-                            System.out.println(node+"   "+net.getNodes().get(++j));
                             numOriginalPos++;
-                            map.put(Integer.parseInt(str[i].substring(14)), Double.parseDouble(str[i+1].substring(12)));
+                            int node = Integer.parseInt(str[i+3].substring(8, str[i+3].length()-2));
+                            if (net.getNodes().contains(node)) {
+                                numNodes++;
+                                map.put(Integer.parseInt(str[i].substring(14)), Double.parseDouble(str[i+1].substring(12)));
+                            }
                         }
-
                         // Your code ends here
                     }
                 }
@@ -107,8 +108,8 @@ public class NetworkHandler {
         } catch (IOException e) {
             System.err.format("IOException: %s%n", e);
         }
-        System.out.println("File: "+f);
         System.out.println("Map size: "+map.size());
+        return map;
     }
 
     private Network<Integer, Integer> readNet(String f) {
@@ -160,7 +161,10 @@ public class NetworkHandler {
         String [ ] dirs = (new File("input")).list();
         ArrayList<Network<Integer, Integer>> netList = nh.init(dirs);
         for (int i = 0; i < netList.size()-3; i++) {
-            nh.readBC("input/"+netList.get(i).getName(), "BCentrality_"+netList.get(i).getName()+".dat", netList.get(i));
+            //netList.get(i).setBCentrality(nh.readBC("input/"+netList.get(i).getName(), "BCentrality_"+netList.get(i).getName()+".dat", netList.get(i)));
+            int node = netList.get(i).getLargestDegree();
+            System.out.println("Largest degree node: " + node);
+            System.out.println(netList.get(i).sir(node, 0.2));
         }
 
         //System.out.println("Average degree: "+network.getAverageDegree());

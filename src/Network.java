@@ -11,12 +11,17 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
     protected double totalBC; // total BetweennessCentrality
     protected V largestDegree;
     protected ArrayList<V> nodes;
+    protected HashMap<V, Double> bcentrality;
 
     public Network(String n) {
         super();
         density = 0.0;
         totalBC = 0.0;
         name = n;
+    }
+
+    public void setBCentrality(HashMap<V, Double> bc) {
+        bcentrality = bc;
     }
 
     public void computeDensity() {
@@ -62,17 +67,19 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
     }
 
     public V getLargestDegree() {
+        int ld = Integer.MIN_VALUE;
+        for (V vertex : this.getVertices()) {
+            if (this.degree(vertex) > ld) {
+                ld = this.degree(vertex);
+                largestDegree=vertex;
+            }
+        }
         return largestDegree;
     }
 
     public double getAverageDegree() {
         int sumDegree = 0;
-        int ld = Integer.MIN_VALUE;
         for (V vertex : this.getVertices()) {
-            if (this.degree(vertex)>ld) {
-                ld = this.degree(vertex);
-                largestDegree=vertex;
-            }
             sumDegree+=this.degree(vertex);
         }
         return (double)sumDegree/this.getVertexCount();
@@ -94,14 +101,21 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
         ArrayList<V> recovered = new ArrayList();
         infected.add(starter);
         while (infected.size() != 0) {
-            for (V v : infected) {
-                for (V neighbor : this.getNeighbors(v)) {
-                    if (random.nextDouble() < beta) {
-                        infected.add(neighbor);
+            for (int i = 0; i < infected.size(); i++) { // for every infected node
+                V node = infected.get(i);
+                int neighbors = 0;
+                if (this.getNeighbors(node).size() > 0) { // if the infected node has neighbors
+                    for (int j = 0; j < this.getNeighbors(node).size(); j++) { // for every neighbor
+                        if (random.nextDouble() < beta) {
+                            // add the neighbor to infected with probability beta
+                            infected.add((V)this.getNeighbors(node).toArray()[j]);
+                        }
+                        neighbors++;
+                        recovered.add(node);
+                        infected.remove(node);
                     }
-                    infected.remove(v);
-                    recovered.add(v);
                 }
+                System.out.println(i+". "+node+" has "+neighbors+" neighbors should be "+this.degree(node)+" neighbors");
             }
         }
 
