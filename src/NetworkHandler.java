@@ -155,16 +155,18 @@ public class NetworkHandler {
         return sameNodes;
     }
 
+
+
     public static void main(String[] args) {
         //Usage: NetworkHandler <Path to DB config file> <Path to store network files> <[Optional: DEBUG]>
         NetworkHandler nh = new NetworkHandler("./conf/conf_db.txt", args[0]);
         String [ ] dirs = (new File("input")).list();
         ArrayList<Network<Integer, Integer>> netList = nh.init(dirs);
-        for (int i = 0; i < netList.size()-3; i++) {
+        for (int i = 0; i < netList.size(); i++) {
             //netList.get(i).setBCentrality(nh.readBC("input/"+netList.get(i).getName(), "BCentrality_"+netList.get(i).getName()+".dat", netList.get(i)));
             int node = netList.get(i).getLargestDegree();
             System.out.println("Largest degree node: " + node);
-            System.out.println(netList.get(i).sir(node, 0.2));
+            System.out.println("Recovered nodes: "+netList.get(i).sir(node, 0.2));
         }
 
         //System.out.println("Average degree: "+network.getAverageDegree());

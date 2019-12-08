@@ -100,25 +100,29 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
         ArrayList<V> infected = new ArrayList();
         ArrayList<V> recovered = new ArrayList();
         infected.add(starter);
-        while (infected.size() != 0) {
+        int count = 0;
+        while (infected.size() > 0) {
             for (int i = 0; i < infected.size(); i++) { // for every infected node
                 V node = infected.get(i);
-                int neighbors = 0;
-                if (this.getNeighbors(node).size() > 0) { // if the infected node has neighbors
-                    for (int j = 0; j < this.getNeighbors(node).size(); j++) { // for every neighbor
-                        if (random.nextDouble() < beta) {
-                            // add the neighbor to infected with probability beta
-                            infected.add((V)this.getNeighbors(node).toArray()[j]);
-                        }
-                        neighbors++;
-                        recovered.add(node);
-                        infected.remove(node);
+                int n = 0;
+                V[] neighbors = (V[]) this.getNeighbors(node).toArray();
+                for (int j = 0; j < neighbors.length; j++) {
+                    if (!recovered.contains(neighbors[j]) && random.nextDouble() < beta) {
+                        // add the neighbor to infected with probability beta
+                        infected.add(neighbors[j]);
                     }
+                    n++;
                 }
-                System.out.println(i+". "+node+" has "+neighbors+" neighbors should be "+this.degree(node)+" neighbors");
+                recovered.add(node);
+                infected.remove(node);
+                count++;
+                //Degree and neighbor count are different because more than one edge may connect two nodes
+                //System.out.print(count+". "+node+" has "+n+" neighbors should be "+this.degree(node)+" which connect: ");
+                //for (E edge : this.getIncidentEdges(node)) { System.out.print(this.getIncidentCount(edge)+" "); }
+                //System.out.println();
             }
         }
-
+        //System.out.println("Count of recovered nodes: "+count);
         return recovered.size();
     }
 }
