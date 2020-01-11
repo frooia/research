@@ -43,7 +43,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -89,7 +89,7 @@
     </recent_temporary>
   </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>$USER_HOME$/.subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -134,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574824445640</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="SIR model for static networks finished">
+      <created>1575842632300</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1575842632300</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -186,6 +193,7 @@
     <MESSAGE value="Able to read from BCentrality files, unable to separate edge centralities from node centralities" />
     <MESSAGE value="Cannot map originalPos to node IDs" />
     <MESSAGE value="BCentrality read, working on SIR model" />
-    <option name="LAST_COMMIT_MESSAGE" value="BCentrality read, working on SIR model" />
+    <MESSAGE value="SIR model for static networks finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="SIR model for static networks finished" />
   </component>
 </project>
