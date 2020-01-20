@@ -1,3 +1,11 @@
+import org.apache.commons.math3.exception.DimensionMismatchException;
+import org.apache.commons.math3.linear.BlockRealMatrix;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.stat.correlation.KendallsCorrelation;
+import org.apache.commons.math3.util.FastMath;
+import org.apache.commons.math3.util.Pair;
+
 import edu.uci.ics.jung.algorithms.scoring.*;
 import edu.uci.ics.jung.algorithms.shortestpath.BFSDistanceLabeler;
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraDistance;
@@ -24,6 +32,7 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
     protected V largestDegree;
     protected ArrayList<V> nodes;
     protected HashMap<Integer, Double> bcentrality;
+    protected double [] kcorrelations = new double[12];
 
     public Network(String n) {
         super();
@@ -85,12 +94,21 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
         return largestDegree;
     }
 
-    public double getAverageDegree() {
+    public double getAverageOutDegree() {
         int sumDegree = 0;
-        for (V vertex : this.getVertices()) {
-            sumDegree+=this.degree(vertex);
+        for (V vertex : nodes) {
+            sumDegree += getSuccessors(vertex).size();
         }
-        return (double)sumDegree/this.getVertexCount();
+        return (double) sumDegree / nodes.size();
+    }
+
+    public double getOutDegreeSD() {
+        double avg = getAverageOutDegree();
+        double sd = 0;
+        for (V vertex : nodes) {
+            sd += Math.pow(getSuccessors(vertex).size() - avg, 2) / nodes.size();
+        }
+        return sd;
     }
 
     public double getAverageCloseness(V node) {
@@ -250,10 +268,10 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
             for (int i = 0; i < infected.size(); i++) {
                 V node = infected.get(i);
                 int n = 0;
-                V[] neighbors = (V[]) this.getNeighbors(node).toArray();
-                for (int j = 0; j < neighbors.length; j++) {
-                    if (!infected.contains(neighbors[j]) && !recovered.contains(neighbors[j]) && random.nextDouble() < beta) {
-                        infected.add(neighbors[j]);
+                V[] successors = (V[]) this.getSuccessors(node).toArray();
+                for (int j = 0; j < successors.length; j++) {
+                    if (!infected.contains(successors[j]) && !recovered.contains(successors[j]) && random.nextDouble() < beta) {
+                        infected.add(successors[j]);
                     }
                     n++;
                 }
@@ -325,6 +343,38 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
         bcentrality = map;
     }
 
+    public Map<Integer, Double> readColumn(String col) throws FileNotFoundException { // works
+        File readFrom = new File("/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+name+"/data_"+name+".tsv");
+        Scanner inFile = new Scanner(readFrom);
+        Map map = new HashMap<V, Double>();
+        int index = -1;
+        while (inFile.hasNext()) {
+            String fileLine = inFile.nextLine();
+            ArrayList<String> line = new ArrayList();
+            boolean x = Collections.addAll(line, fileLine.split("\t"));
+            if (line.get(0).equals("Node")) { index = line.indexOf(col); }
+            else { map.put(Integer.parseInt(line.get(0)), Double.parseDouble(line.get(index))); }
+        }
+        return map;
+    }
+
+    public List<Double> mapRanker(Map unranked) {
+        Set entries = unranked.entrySet();
+        Comparator<Map.Entry<Integer, Double>> comparator = new Comparator<Map.Entry<Integer, Double>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Double> o1, Map.Entry<Integer, Double> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        };
+        List<Map.Entry<Integer, Double>> entryList = new ArrayList<Map.Entry<Integer, Double>>(entries);
+        Collections.sort(entryList, comparator);
+        List<Double> sorted = new ArrayList<Double>();
+        for (Map.Entry entry : entryList) {
+            sorted.add(Double.valueOf(entry.getKey().toString()));
+        }
+        return sorted; // list of nodes
+    }
+
     public void writeData() throws IOException {
         File file = new File("/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+name+"/data_"+name+".tsv");
         FileWriter fos = new FileWriter(file);
@@ -378,10 +428,69 @@ public class Network<V,E> extends SparseMultigraph<V,E> {
             lines.add(l);
         }
         Files.write(writeTo.toPath(), lines, Charset.defaultCharset());
+        System.out.println(name+" was edited");
+    }
+
+    public void removeColumn(String title, String writeToPath) throws IOException {
+        File readFrom = new File("/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+name+"/data_"+name+".tsv");
+        File writeTo = new File(writeToPath);
+        Scanner inFile = new Scanner(readFrom);
+        ArrayList<String> lines = new ArrayList<>();
+        int index = -1;
+        while (inFile.hasNext()) {
+            String fileLine = inFile.nextLine();
+            ArrayList<String> line = new ArrayList();
+            boolean x = Collections.addAll(line, fileLine.split("\t"));
+            if (line.get(0).equals("Node")) { index = line.indexOf(title); }
+            line.remove(index);
+            String l = "";
+            for (String s : line) {
+                l+= s+"\t";
+            }
+            lines.add(l);
+        }
+        Files.write(writeTo.toPath(), lines, Charset.defaultCharset());
+        System.out.println(title+" was removed");
+    }
+
+    public void setCorrelations() throws FileNotFoundException {
+        KendallsCorrelation kc = new KendallsCorrelation();
+        List<Double> l1 = new ArrayList(this.mapRanker(this.readColumn("BCentrality")));
+        double [] l1a = new double[l1.size()];
+        for (int i = 0; i < l1.size(); i++) { l1a[i] = l1.get(i); }
+        List<Double> l2 = new ArrayList(this.mapRanker(this.readColumn("SIR")));
+        double [] l2a = new double[l2.size()];
+        for (int i = 0; i < l2.size(); i++) { l2a[i] = l2.get(i); }
+        List<Double> l3 = new ArrayList(this.mapRanker(this.readColumn("In-Degree")));
+        double [] l3a = new double[l3.size()];
+        for (int i = 0; i < l3.size(); i++) { l3a[i] = l3.get(i); }
+        List<Double> l4 = new ArrayList(this.mapRanker(this.readColumn("Out-Degree")));
+        double [] l4a = new double[l4.size()];
+        for (int i = 0; i < l4.size(); i++) { l4a[i] = l4.get(i); }
+        List<Double> l5 = new ArrayList(this.mapRanker(this.readColumn("HubScore")));
+        double [] l5a = new double[l5.size()];
+        for (int i = 0; i < l5.size(); i++) { l5a[i] = l5.get(i); }
+        List<Double> l6 = new ArrayList(this.mapRanker(this.readColumn("AuthorityScore")));
+        double [] l6a = new double[l6.size()];
+        for (int i = 0; i < l6.size(); i++) { l6a[i] = l6.get(i); }
+        double [] scores = new double[12];
+        scores[0] = kc.correlation(l2a, l5a); //SIR vs. HubScore
+        scores[1] = kc.correlation(l2a, l6a); //SIR vs. AuthorityScore
+        scores[2] = kc.correlation(l3a, l4a); //In-degree vs. Out-degree
+        scores[3] = kc.correlation(l3a, l1a); //In-degree vs. BCentrality
+        scores[4] = kc.correlation(l3a, l5a); //In-degree vs. HubScore
+        scores[5] = kc.correlation(l3a, l6a); //In-degree vs. AuthorityScore
+        scores[6] = kc.correlation(l4a, l1a); //Out-degree vs. BCentrality
+        scores[7] = kc.correlation(l4a, l5a); //Out-degree vs. HubScore
+        scores[8] = kc.correlation(l4a, l6a); //Out-degree vs. AuthorityScore
+        scores[9] = kc.correlation(l1a, l5a); //BCentrality vs. HubScore
+        scores[10] = kc.correlation(l1a, l6a); //BCentrality vs. AuthorityScore
+        scores[11] = kc.correlation(l5a, l6a); //HubScore vs. AuthorityScore
+        kcorrelations = scores;
     }
 
     public String toString() {
-        // name n m density avgdegree largestdegreenode
-        return name+"\t"+this.getVertexCount()+"\t"+this.getEdgeCount()+"\t"+this.getDensity()+"\t"+this.getAverageDegree()+"\t"+this.getLargestDegree()+"\t"+totalBC;
+        // name n m density avgoutdegree largestdegreenode totalbc
+        return name+"\t"+this.getVertexCount()+"\t"+this.getEdgeCount()+"\t"+this.getDensity()+"\t"+this.getAverageOutDegree()+"\t"+this.getLargestDegree()+"\t"+totalBC;
     }
 }

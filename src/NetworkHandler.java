@@ -18,6 +18,9 @@ import edu.uci.ics.jung.graph.util.EdgeType;
 import com.cedarsoftware.util.io.JsonReader;
 import com.cedarsoftware.util.io.JsonIoException;
 
+import org.apache.commons.math3.stat.correlation.*;
+import org.apache.commons.lang3.*;
+
 
 public class NetworkHandler {
     private Network<Integer, Integer> net;
@@ -51,6 +54,7 @@ public class NetworkHandler {
                     System.out.println("EdgeCount = "+net.getEdgeCount());
                     net.setNodes();
                     System.out.println("NodeCount = "+net.getVertexCount());
+                    net.setCorrelations();
 
                     /*
                     int in0 = 0; int in1 = 0; int in2 = 0; int in310 = 0; int in100 = 0; int in1000 = 0; int in1000p = 0;
@@ -212,14 +216,56 @@ public class NetworkHandler {
         NetworkHandler nh = new NetworkHandler("./conf/conf_db.txt", args[0]);
         String [ ] dirs = (new File("/Users/lydia/Documents/GitHub/backup_CyberTF/network_research")).list();
         Arrays.sort(dirs);
-        ArrayList<Network<Integer, Integer>> netList = nh.init(Arrays.copyOfRange(dirs, 1, 2));
-        for (Network net : netList) {
-//            net.readBC("/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName(), "BCentrality_"+net.getName()+".dat");
-//            net.writeData();
-//            net.editData("HubScore", net.calcHits(true), "/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName()+"/data_"+net.getName()+".tsv");
-//            net.editData("AuthorityScore", net.calcHits(false), "/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName()+"/data_"+net.getName()+".tsv");
-            net.editData("SIR", net.runSIR(0.2));
+//        ArrayList<Network<Integer, Integer>> netList = nh.init(Arrays.copyOfRange(dirs, 1, 30));
+        ArrayList<Network<Integer, Integer>> netList = nh.init(Arrays.copyOfRange(dirs, 30, 57));
+/* done
+        File file = new File("/Users/lydia/Documents/GitHub/backup_CyberTF/correlation_scores.tsv");
+        FileWriter fos = new FileWriter(file);
+        PrintWriter dos = new PrintWriter(fos);
+        dos.write("Network\t\n");
+        for (int i = 1; i < dirs.length; i++) {
+            dos.println(dirs[i]+"\t");
         }
-//        System.out.println(sirTemp(netList, netList.get(0).getLargestDegree(), 0.2));
+        dos.close();
+        fos.close();
+        System.out.println("written");
+
+ */
+        File writeTo = new File("/Users/lydia/Documents/GitHub/backup_CyberTF/temp.tsv");
+        ArrayList<String> lines = new ArrayList<>();
+        lines.add("SIR vs. HubScore\tSIR vs. AuthorityScore\tIn-degree vs. Out-degree\tIn-degree vs. BCentrality\tIn-degree vs. HubScore\tIn-degree vs. AuthorityScore\tOut-degree vs. BCentrality\tOut-degree vs. HubScore\tOut-degree vs. AuthorityScore\tBCentrality vs. HubScore\tBCentrality vs. AuthorityScore\tHubScore vs. AuthorityScore");
+        for (Network net : netList) {
+            /* done
+            net.readBC("/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName(), "BCentrality_"+net.getName()+".dat");
+            net.writeData();
+            net.editData("HubScore", net.calcHits(true), "/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName()+"/data_"+net.getName()+".tsv");
+            net.editData("AuthorityScore", net.calcHits(false), "/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName()+"/data_"+net.getName()+".tsv");
+            System.out.println(net.getAverageOutDegree());
+            System.out.println(net.getOutDegreeSD());
+            double beta = net.getAverageOutDegree() / (net.getOutDegreeSD() - net.getAverageOutDegree());
+
+            net.removeColumn("SIR", "/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName()+"/data_"+net.getName()+".tsv");
+            net.editData("SIR", net.runSIR(0.5), "/Users/lydia/Documents/GitHub/backup_CyberTF/network_research/"+net.getName()+"/data_"+net.getName()+".tsv");
+
+            KendallsCorrelation kc = new KendallsCorrelation();
+            List<Double> l1 = new ArrayList(net.mapRanker(net.readColumn("BCentrality")));
+            double [] l1a = new double[l1.size()];
+            for (int i = 0; i < l1.size(); i++) { l1a[i] = l1.get(i); }
+            List<Double> l2 = new ArrayList(net.mapRanker(net.readColumn("SIR")));
+            double [] l2a = new double[l2.size()];
+            for (int i = 0; i < l2.size(); i++) { l2a[i] = l2.get(i); }
+            double correlationScore = kc.correlation(l1a, l2a);
+            System.out.println(net.getName()+": "+correlationScore);
+             */
+            String line = "";
+            for (double correlationScore : net.kcorrelations) {
+                line += correlationScore+"\t";
+            }
+            lines.add(line);
+
+        }
+        Files.write(writeTo.toPath(), lines, Charset.defaultCharset());
+        System.out.println("written");
+
     }
 }
